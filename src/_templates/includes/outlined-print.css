@@ -1,0 +1,110 @@
+h1 {
+    --min-padding: .1em .2em 0 .1em;
+    --min-margin: 0 .2em 0 0;
+    --bdr-width: 0 4pt 0 0;
+    text-transform: uppercase;
+}
+
+dl {
+    --col-align: start;
+    --c-space: 8pt;
+}
+
+strong {
+    text-transform: capitalize;
+}
+
+p {
+    --min-padding: 0 8pt;
+    --bdr-width: 0 2pt 0 2pt;
+}
+
+dd:first-child {
+    font-weight: 600;
+    word-spacing: .09em;
+}
+
+.table-wrapper {
+    --space: 16pt;
+    flex-grow: 2;
+}
+
+.box-bordered {
+    border-style: solid;
+    border-color: var(--bdr-clr, currentcolor);
+    border-width: var(--bdr-width, 0);
+    margin: var(--min-margin, 0);
+}
+
+@media print {
+    :root {
+        --size-m: 12pt;
+    }
+    .overview-grid {
+        --g-template: "area1 area2 area2" ". area3 area4" / minmax(2cm, 0.5fr) 1fr 1fr;
+        --g-gap: 48pt 24pt;
+
+        & + section {
+            margin-block-start:  48pt;
+        }
+    }
+
+    table {
+        --border: 2pt solid black;
+
+        inline-size: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border:var(--border);
+        border-radius: 10pt;
+        container: table / inline-size;
+    }
+
+    .col-1-outlined {
+        --col-1-size: 45%;
+    }
+
+    :where(th, td):first-child:where(.col-1-outlined *) {
+        border-right: var(--border);
+    }
+
+    :is(td, th) {
+        padding: 12pt 16pt;
+        letter-spacing: 0.04em;
+
+        &:first-child {
+            min-inline-size: var(--col-1-size, 70%);
+        }
+
+        &:where(tr:not(:first-child) > *, thead + tbody > tr:first-child > *) {
+            border-block-start: var(--border);
+        }
+        &:not(:last-child) {
+            text-align: start;
+        }
+        &:last-child {
+            letter-spacing: 0.09em;
+            text-align: end;
+            font-weight: bold;
+        }
+    }
+    th {
+        font-size: clamp(1.2rem, 1.113rem + 0.58 * var(--font-unit, 1vw), 1.5625rem);
+        text-transform: uppercase;
+    }
+    [scope="row"], .padded-start > :first-child {
+        padding-inline-start: 45%;
+    }
+    .padded-start:where(.table-wrapper > *) {
+        --i-alignment: space-between;
+        padding: 12pt 16pt 0 0;
+
+        & > p {
+            --min-padding: 8pt;
+            --radius: 24pt;
+            --fill: red;
+
+            border: 2pt solid black;
+        }
+    }
+}

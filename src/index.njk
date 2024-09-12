@@ -9,14 +9,20 @@
 
 <body>
     <style>{%cssmin "includes/foundations.css"%}</style>
+    <style>{%cssmin "includes/outlined-print.css"%}</style>
     <main class="stack">
         <section class="overview-grid" aria-labelledby="overview-header">
+            {% if client.logo %}
+               <img src="{{client.log}}" alt="{{client.name}}'s logo">
+            {% else %}
+                <div></div>
+            {% endif %}
             <div class="stack">
-                <h1 id="overview-header"><span>Invoice</span><span>{{ client.name }} </span></h1>
+                <h1 id="overview-header"><span class="box-bordered">Invoice</span><span>{{ client.name }} </span></h1>
                 <div class="row">
                     <p>{{id}}</p>
-                    <p>{{invoice_date}}</p>
-                    <p>{{due_date}}</p>
+                    <p class="box-bordered"><strong>date</strong> {{invoice_date}}</p>
+                    <p><strong>due date</strong> {{due_date}}</p>
                 </div>
             </div>
             {%set attributes = ["name", "id", "address"]%}
@@ -59,7 +65,7 @@
                     </div>
            {% endif %}
           <div class="table-wrapper stack">
-            <table>
+            <table class="col-1-outlined">
                 <caption class="visually-hidden">Invoice item's details</caption>
                 <thead>
                   <th scope="column">Description</th>
@@ -89,9 +95,12 @@
                     <td>{{tax}}</td>
                 </tr>
             </table>
+            <div class="padded-start row">
+                <h4>total</h4>
+                <p class="box"><strong>{{invoice_total}}</strong></p>
+            </div>
           </div>
         </section>
     </main>
 </body>
-
 </html>

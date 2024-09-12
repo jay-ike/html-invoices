@@ -24,6 +24,7 @@ module.exports = Object.freeze({
             unitPrice: "$250"
         }
     ],
+    invoice_total: "$30,000",
     items_total: "$30,000",
     sender: {
         address: "64 Rue Foch, Akwa-Douala",
