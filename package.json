@@ -1,0 +1,26 @@
+{
+  "name": "html-invoices",
+  "version": "1.0.0",
+  "description": "A set of invoice templates implemented in HTML and printable",
+  "main": "eleventy.config.js",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve --port 4044",
+    "lint": "stylelint **/*.css",
+    "lint:fix": "stylelint **/*.css --fix"
+  },
+  "keywords": [
+    "html-print",
+    "invoices"
+  ],
+  "author": "Ndimah Tchougoua",
+  "license": "ISC",
+  "dependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "lightningcss": "^1.27.0"
+  },
+  "devDependencies": {
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1"
+  }
+}

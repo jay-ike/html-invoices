@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{client.name}}'s Invoice</title>
+</head>
+
+<body>
+    <style>{%cssmin "includes/foundations.css"%}</style>
+    <main class="stack">
+        <section class="overview-grid" aria-labelledby="overview-header">
+            <div class="stack">
+                <h1 id="overview-header"><span>Invoice</span><span>{{ client.name }} </span></h1>
+                <div class="row">
+                    <p>{{id}}</p>
+                    <p>{{invoice_date}}</p>
+                    <p>{{due_date}}</p>
+                </div>
+            </div>
+            {%set attributes = ["name", "id", "address"]%}
+            {% macro user_details(title, args) %}
+               <dl class="stack">
+                <dt>{{title}}</dt>
+                <div class="column">
+                    {% for item in attributes %}
+                       {% if args[item] %}
+                        <dd>{{args[item]}}</dd>
+                       {% endif %}
+                    {% endfor %}
+                </div>
+               </dl>
+            {% endmacro %}
+            {{user_details("From", sender)}}
+            {{user_details("To", client)}}
+        </section>
+        <section class="row">
+            {% if payment_infos %}
+                {% set topics%}
+                     {holder: "Account holder" , code: "Sort code" , accNumber: "Account number" , iban: "IBAN"}
+                {% endset %}
+                    <div class="stack" aria-labelledby="payment-title">
+                        <h3 id="payment-title">Payment Info</h3>
+                        <dl class="column">
+                            {% for key, val in Object.entries(payment_infos) %}
+                                {% if topics[key]  %}
+                                    <div class="stack">
+                                        <dt>
+                                            {{topics[key]}}
+                                        </dt>
+                                        <dd>
+                                            {{val}}
+                                        </dd>
+                                    </div>
+                                 {% endif %}
+                            {% endfor %}
+                        </dl>
+                    </div>
+           {% endif %}
+          <div class="table-wrapper stack">
+            <table>
+                <caption class="visually-hidden">Invoice item's details</caption>
+                <thead>
+                  <th scope="column">Description</th>
+                  <th scope="column">Rate</th>
+                  <th scope="column">Hours</th>
+                  <th scope="column">Amount</th>
+                </thead>
+                <tbody>
+                  {% for item in items %}
+                   <tr>
+                     <td>{{item.description}} </td>
+                     <td>{{item.unitPrice}} </td>
+                     <td>{{item.quantity}} </td>
+                     <td>{{item.total}} </td>
+                   </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+            <table>
+                <caption class="visually-hidden">Invoice item's summary</caption>
+                <tr>
+                    <th scope="row">Sub total</th>
+                    <td>{{items_total}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Tax</th>
+                    <td>{{tax}}</td>
+                </tr>
+            </table>
+          </div>
+        </section>
+    </main>
+</body>
+
+</html>

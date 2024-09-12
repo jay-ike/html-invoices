@@ -1,0 +1,273 @@
+@layer resets, layout, typography, utilities;
+
+@layer utilities {
+    .capitalize {
+        text-transform: capitalize;
+    }
+
+    .ml-max {
+        margin-inline-start: auto;
+    }
+
+    .place-end {
+        place-self: end;
+    }
+
+    .no-padding {
+        padding: 0;
+    }
+
+    :where(.contain) {
+        container: var(--container-name, section) / inline-size;
+    }
+
+    :where(.visually-hidden) {
+        max-inline-size: 1px;
+        max-block-size: 1px;
+        overflow: clip;
+        text-wrap: nowrap;
+        position: absolute;
+        clip-path: inset(50%);
+    }
+
+    .no-gap {
+        --r-space: 0;
+        --c-space: 0;
+    }
+}
+
+@layer layout {
+    :where(.stack, .xl-stack)>*+*,
+    .mt-xl {
+        margin-block-start: var(--s-space, 1.5em);
+    }
+
+    .mt-xl,
+    .xl-stack {
+        --s-space: 8rem;
+    }
+
+    :is(.row, .column, .segragator, .cart-modal) {
+        display: flex;
+        align-items: var(--alignment, center);
+        gap: var(--spacing, 1.5em);
+        justify-content: var(--i-alignment, start);
+    }
+
+    .segragator {
+        --i-alignment: space-between;
+
+        flex-flow: var(--direction, row) var(--wrap, nowrap);
+    }
+
+    .row {
+        --alignment: var(--row-align, center);
+        --spacing: var(--r-space);
+
+        flex-flow: var(--row-dir, row) var(--wrap, nowrap);
+    }
+
+    .column {
+        --alignment: var(--col-align, stretch);
+        --spacing: var(--c-space);
+
+        flex-flow: var(--col-dir, column) var(--wrap, nowrap);
+    }
+
+    .center {
+        display: grid;
+        place-items: center;
+        place-content: center;
+        gap: var(--c-gap, 1.5em);
+    }
+
+    :where([class*="box-"], .box, button, .btn) {
+        padding: var(--min-padding, 1.5em);
+        background-color: var(--color-fill, transparent);
+        color: var(--color-text, currentColor);
+        border-radius: var(--radius, 0);
+    }
+
+    :is([class$="grid"]) {
+        --col-align: center;
+
+        display: grid;
+        grid-template: var(--g-template);
+        gap: var(--g-gap, var(--size-m, 1rem));
+        place-items: var(--p-items, initial);
+
+        &> :first-child {
+            grid-area: area1;
+        }
+
+        &> :nth-child(2) {
+            grid-area: area2;
+        }
+
+        &> :nth-child(3) {
+            grid-area: area3;
+        }
+
+        &> :nth-child(4) {
+            grid-area: area4;
+        }
+
+        &> :nth-child(5) {
+            grid-area: area5;
+        }
+    }
+
+    .responsive-grid:not([class$="grid"]) {
+        --max-col-width: var(--m-col-w, 12rem);
+        --min-row-height: var(--m-row-h, 15rem);
+        --max-cols: var(--m-col-s, 3);
+        --gap: var(--c-gap, var(--size-m, 1rem));
+
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, max(var(--max-col-width), (100% / var(--max-cols)) - var(--gap))),
+                    1fr));
+        grid-auto-rows: minmax(var(--min-row-height), auto);
+        gap: var(--gap);
+    }
+}
+
+
+@layer resets {
+    :is(*, ::before, ::after) {
+        box-sizing: border-box;
+    }
+
+    :is(h2, h3, h4, h5) {
+        line-height: 1.2;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        letter-spacing: -0.01em;
+    }
+
+    h1 {
+        line-height: 1.1;
+        letter-spacing: 0.04em;
+    }
+
+    :is(body, h1, h2, h3, h4, h5, dl, dt, dd, p) {
+        margin: 0;
+    }
+
+    :is(img, svg) {
+        max-inline-size: 100%;
+        display: block;
+    }
+
+    :is(ul, ol, fieldset, legend, menu, [popover]) {
+        margin: 0;
+        padding: 0;
+    }
+
+    :is(summary, ul):where([class]) {
+        list-style-type: "";
+    }
+
+    :is(button, fieldset, dialog) {
+        border: none;
+    }
+
+    a {
+        --outline-style: dashed;
+
+        display: inline-block;
+
+        &:where([class]) {
+            text-decoration: none;
+            color: var(--link-clr, var(--icon-fill, inherit));
+        }
+
+        &:not([class]) {
+            --outline-style: dashed;
+
+            text-decoration-thickness: max(0.08em, 1px);
+            text-underline-offset: 0.15em;
+            color: var(--link-clr, inherit);
+
+            &:not(:disabled):where(:focus-visible, :hover) {
+                --icon-fill: oklch(92% 48% 35deg);
+
+                color: var(--fill-hover, var(--icon-fill));
+                text-decoration: currentcolor wavy underline;
+            }
+        }
+    }
+
+
+    button,
+    a,
+    dt {
+        font-weight: 700;
+    }
+
+    button,
+    a {
+        text-transform: uppercase;
+        font: inherit;
+    }
+
+    button {
+        min-inline-size: 3rem;
+        min-block-size: 3rem;
+        touch-action: manipulation;
+        user-select: none;
+
+        & > * {
+            pointer-events: none;
+        }
+    }
+
+    :is(a, button, input):focus:not(:focus-visible) {
+        outline: none;
+    }
+
+    p:where(:not([class])) {
+        white-space: var(--p-space, collapse balance);
+        max-inline-size: var(--p-width, 50em);
+    }
+}
+
+
+@layer typography {
+    :is(a, p, dt, dd, legend, .fluid-type) {
+        font-size: clamp(var(--f-size, 1.25rem) * clamp(0.5, 1 - var(--f-size-diff, 0.2), 0.9),
+                var(--f-size-fluid, 0.94rem + (0.4 * var(--font-unit, 1vw))),
+                var(--f-size, 1.25rem));
+    }
+
+    :is(h2, h3, h4, h5) {
+        text-transform: var(--t-transform, uppercase);
+        color: var(--heading-clr, currentColor);
+    }
+
+    h1 {
+        font-size: clamp(2.0736rem, 1.8388rem + 1.5651 * var(--font-unit, 1vw), 3.0518rem);
+    }
+
+    h2 {
+        font-size: clamp(1.728rem, 1.5568rem + 1.1415 * var(--font-unit, 1vw), 2.4414rem);
+    }
+
+    h3 {
+        font-size: clamp(1.44rem, 1.3169rem + 0.821 * var(--font-unit, 1vw), 1.9531rem);
+    }
+
+    h4 {
+        font-size: clamp(1.2rem, 1.113rem + 0.58 * var(--font-unit, 1vw), 1.5625rem);
+    }
+
+    h5 {
+        font-size: clamp(0.8333rem, 0.7933rem + 0.2667 * var(--font-unit, 1vw), var(--size-m, 1rem));
+    }
+
+    @supports (font-size: 1cqi) {
+        :is(h1, h2, h3, h4, p, dt, dd, .fluid-type, a) {
+            --font-unit: 1cqi;
+        }
+    }
+}
+
