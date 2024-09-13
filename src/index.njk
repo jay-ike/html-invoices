@@ -13,7 +13,7 @@
     <main class="stack">
         <section class="overview-grid" aria-labelledby="overview-header">
             {% if client.logo %}
-               <img src="{{client.log}}" alt="{{client.name}}'s logo">
+               <img src="{{client.logo}}" alt="{{client.name}}'s logo" width="145" height="145">
             {% else %}
                 <div></div>
             {% endif %}
@@ -43,13 +43,11 @@
         </section>
         <section class="row">
             {% if payment_infos %}
-                {% set topics%}
-                     {holder: "Account holder" , code: "Sort code" , accNumber: "Account number" , iban: "IBAN"}
-                {% endset %}
+                {% set topics = {"holder": "Account holder" , "code": "Sort code" , "accNumber": "Account number" , "iban": "IBAN"}%}
                     <div class="stack" aria-labelledby="payment-title">
                         <h3 id="payment-title">Payment Info</h3>
                         <dl class="column">
-                            {% for key, val in Object.entries(payment_infos) %}
+                            {% for key, val in payment_infos | dictsort %}
                                 {% if topics[key]  %}
                                     <div class="stack">
                                         <dt>

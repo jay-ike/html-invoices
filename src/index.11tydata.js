@@ -26,6 +26,12 @@ module.exports = Object.freeze({
     ],
     invoice_total: "$30,000",
     items_total: "$30,000",
+    payment_infos: {
+        accNumber: "013580893489834984",
+        code: 87601,
+        holder: "TANKOUA LUCIEN",
+        iban: "12399830489458945"
+    },
     sender: {
         address: "64 Rue Foch, Akwa-Douala",
         email: "kndemgne@press.com",

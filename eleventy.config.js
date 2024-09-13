@@ -25,6 +25,7 @@ module.exports = function (config) {
         let result = await parseCss(config, src);
         return result;
     });
+    config.addPassthroughCopy("assets");
 
     return {
         dir: {

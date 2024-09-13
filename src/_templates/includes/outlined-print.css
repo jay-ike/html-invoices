@@ -19,6 +19,14 @@ p {
     --bdr-width: 0 2pt 0 2pt;
 }
 
+footer {
+    --min-padding: 12pt 24pt;
+
+    position: running(footer);
+    font-size: 0.6em;
+    border-image: linear-gradient(#c4c4c4, #c4c4c4)  1 0 0 / 2px / 0 100vi 0;
+}
+
 dd:first-child {
     font-weight: 600;
     word-spacing: .09em;
@@ -39,9 +47,11 @@ dd:first-child {
 @media print {
     :root {
         --size-m: 12pt;
+        font-size: 12pt;
     }
+
     .overview-grid {
-        --g-template: "area1 area2 area2" ". area3 area4" / minmax(2cm, 0.5fr) 1fr 1fr;
+        --g-template: "area1 area2 area2" ". area3 area4" / max-content 1fr 1fr;
         --g-gap: 48pt 24pt;
 
         & + section {
@@ -93,7 +103,7 @@ dd:first-child {
         text-transform: uppercase;
     }
     [scope="row"], .padded-start > :first-child {
-        padding-inline-start: 45%;
+        padding-inline-start: 35%;
     }
     .padded-start:where(.table-wrapper > *) {
         --i-alignment: space-between;
@@ -105,6 +115,26 @@ dd:first-child {
             --fill: red;
 
             border: 2pt solid black;
+        }
+    }
+    [aria-labelledby="payment-title"] > dl {
+        --s-space: 4pt;
+        --col-align: start;
+
+        margin-block-start: 8pt;
+    }
+    main > section:last-of-type {
+        --row-align: start;
+    }
+    @page {
+        size: A4 portrait;
+        margin: 20mm;
+        bleed: 0;
+
+        @bottom-center {
+            content: element(footer);
+            vertical-align: top;
+            text-align: start;
         }
     }
 }
